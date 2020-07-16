@@ -1,27 +1,59 @@
 const express = require('express');
-
-// eslint-disable-next-line new-cap
 const router = express.Router();
-// const {logger} = require('./../config');
+const Validators = require('express-joi-validation').createValidator({});
+
+const {logger, helper} = require('./../config');
+const { leadService } = require('./../services');
+const VDS = require('./validators');
+const { mv_staff } = require('./middlewares');
 
 // get leads
-router.get('/', function(req, res, next) {
-  // add code here
+router.get('/', mv_staff, async function(req, res, next) {
+  try {
+    const leads = await leadService.findAll();
+    return helper.ApiResponse(res,200,true, 'Leads list', leads)    
+  } catch (error) {
+    logger.error(error);
+    return  next(error);
+  }
 });
 
 // add lead
-router.post('/', function(req, res, next) {
-  // add code here
+router.post('/', mv_staff, Validators.body(VDS.addLead), async  function(req, res, next) {
+  try {
+    const params = req.body;
+    const lead = await leadService.create(params);
+    logger.info('lead created id =>'+ lead.id)
+    return helper.ApiResponse(res,200,true, 'Leads Created', lead.id)    
+  } catch (error) {
+    logger.error(error);
+    return  next(error);
+  }
 });
 
 // update lead
-router.put('/:id', function(req, res, next) {
-  // add code here
+router.put('/:id', mv_staff, Validators.body(VDS.updateLead), async  function(req, res, next) {
+  try {
+    const id = req.params.id;
+    const params = req.body;
+    const lead = await leadService.updateLead(id, params)
+    return helper.ApiResponse(res,200,true, 'Lead Update',lead)    
+  } catch (error) {
+    logger.error(error);
+    return  next(error);
+  }
 });
 
 // delete lead
-router.put('/:id', function(req, res, next) {
-  // add code here
+router.delete('/:id', mv_staff, async  function(req, res, next) {
+  try {
+    const id = req.params.id;
+    await leadService.deleteLead(id);
+    return helper.ApiResponse(res,200,true, 'Leads Delete', {})    
+  } catch (error) {
+    logger.error(error);
+    return  next(error);
+  }
 });
 
 module.exports = router;
