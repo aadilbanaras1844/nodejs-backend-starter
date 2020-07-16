@@ -11,7 +11,6 @@ const addRoutes = require('./routes');
 
 const app = express();
 
-addRoutes(app);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -21,8 +20,11 @@ app.use(morgan('combined', {stream: winston.stream}));
 
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
+
 app.use(cookieParser());
 app.use('/static', express.static(path.join(__dirname, 'public')));
+
+addRoutes(app);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

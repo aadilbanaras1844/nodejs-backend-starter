@@ -22,7 +22,6 @@ module.exports = class BaseService {
 
   async findAll( params= {} ) {
     const records = await this.model.findAll({
-      sort: {priority: -1},
       where: params,
     });
     return records;
