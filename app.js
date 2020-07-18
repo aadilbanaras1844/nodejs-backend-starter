@@ -3,6 +3,7 @@ const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 
 const morgan = require('morgan');
 const winston = require('./config/winston');
@@ -10,6 +11,7 @@ const winston = require('./config/winston');
 const addRoutes = require('./routes');
 
 const app = express();
+app.use(cors());
 
 
 // view engine setup

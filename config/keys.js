@@ -14,6 +14,6 @@ module.exports = {
       idle: 10000,
     },
   },
-  jwtKey: process.env.JWT_KEY || 'hahtesgsdfsdkljlhwjsdfsdf'
+  jwtKey: process.env.JWT_KEY || 'hahtesgsdfsdkljlhwjsdfsdf',
 
 };

@@ -3,9 +3,9 @@ const {sequelize, DataTypes} = require('./../config/db');
 const UsersModel = require('./users')(sequelize, DataTypes);
 const LeadsModel = require('./leads')(sequelize, DataTypes);
 
-const {helper} = require('./../config');
+// const {helper} = require('./../config');
 
-UsersModel.sync({force: false}).then(async function () {
+UsersModel.sync({force: false}).then(async function() {
   // Table created
   // return UsersModel.create({
   //   first_name: 'super',
@@ -16,7 +16,7 @@ UsersModel.sync({force: false}).then(async function () {
   //   password: await helper.encryptPassword('super')
   // });
 });
-LeadsModel.sync({force: false}).then(async function () {});
+LeadsModel.sync({force: false}).then(async function() {});
 
 module.exports = {
   UsersModel,
