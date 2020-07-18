@@ -10,7 +10,9 @@ module.exports.mvSuperAdmin = function(req, res, next) {
   try {
     const decoded = jwt.verify(token, keys.jwtKey);
     if (!decoded.is_super_admin) {
-      return next(new Error('Access denied, Not a Super Admin'));
+      const err = new Error('Access denied, Not a Super Admin');
+      err.status = 401;
+      return next(err);
     }
     req.user = decoded;
     next();
@@ -28,7 +30,9 @@ module.exports.mvStaff = function(req, res, next) {
   try {
     const decoded = jwt.verify(token, keys.jwtKey);
     if (!decoded.is_staff) {
-      return next(new Error('Access denied, Not a Staff'));
+      const err = new Error('Access denied, Not a Staff');
+      err.status = 401;
+      return next(err);
     }
     req.user = decoded;
     next();
